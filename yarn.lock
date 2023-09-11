@@ -249,6 +249,23 @@
     "@tauri-apps/cli-win32-ia32-msvc" "1.4.0"
     "@tauri-apps/cli-win32-x64-msvc" "1.4.0"
 
+"@types/gapi.calendar@^3.0.6":
+  version "3.0.6"
+  resolved "https://registry.yarnpkg.com/@types/gapi.calendar/-/gapi.calendar-3.0.6.tgz#8ff854204056f2b0396283155fef8c10654a7e26"
+  integrity sha512-5POp+QFcJh7yHHOaOc3pkvEZq99u8EzaHuAL+0XcrNKQpN6EM9T6guQ2Q2O39KWkxGvAKdshDv2ZwB7I+v+t3A==
+  dependencies:
+    "@types/gapi" "*"
+
+"@types/gapi.client@^1.0.5":
+  version "1.0.5"
+  resolved "https://registry.yarnpkg.com/@types/gapi.client/-/gapi.client-1.0.5.tgz#a6eb97e664fe51656c5b52258bd0afef28c76308"
+  integrity sha512-OTpbBMuzfC4lkvaomxqskI/iWRGW3zOZbDXZLNSyiuswTiSSGgILRLkg0POuZ4EgzEdaYaTlXpnXiCp07ri/Yw==
+
+"@types/gapi@*", "@types/gapi@^0.0.44":
+  version "0.0.44"
+  resolved "https://registry.yarnpkg.com/@types/gapi/-/gapi-0.0.44.tgz#f097f7a0f59d63a59098a08a62a560ca168426fb"
+  integrity sha512-hsgJMfZ/pMwI15UlAYHMNwj8DRoigo1odhbPwEXdp19ZQwQAXbcRrpzaDsfc+9XM6RtGpvl4Ja7uW8A+KPCa7w==
+
 "@types/node@*":
   version "20.6.0"
   resolved "https://registry.yarnpkg.com/@types/node/-/node-20.6.0.tgz#9d7daa855d33d4efec8aea88cd66db1c2f0ebe16"

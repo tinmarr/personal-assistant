@@ -1,17 +1,22 @@
 <script setup lang="ts">
-import { createClient } from '@supabase/supabase-js';
+import { ref } from 'vue';
+import { signIn } from "./services/auth";
+import { ensureGapi, getCalendar, Statuses } from './services/google';
 
-const supabase = createClient(import.meta.env.VITE_SUPABASE_URL, import.meta.env.VITE_SUPABASE_KEY);
+let temp = ref("waiting...");
 
-const signIn = async () => {
-  const { data, error } = await supabase.auth.signInWithOAuth({
-    provider: 'google',
-  });
-  console.log(data, error)
+ensureGapi();
+
+const getData = async () => {
+  let c = await getCalendar("primary")
+  temp.value = JSON.stringify(c != Statuses.UNAUTHORIZED ? c : "No auth");
 }
+
 </script>
 
 <template>
-<v-btn @click="signIn">sign in</v-btn>
-
+  <v-btn @click="signIn">sign in</v-btn>
+  <v-btn @click="getData">get data</v-btn>
+  <br>
+  {{ temp }}
 </template>

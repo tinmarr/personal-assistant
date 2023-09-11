@@ -17,6 +17,9 @@
   },
   "devDependencies": {
     "@tauri-apps/cli": "^1.4.0",
+    "@types/gapi": "^0.0.44",
+    "@types/gapi.calendar": "^3.0.6",
+    "@types/gapi.client": "^1.0.5",
     "@vitejs/plugin-vue": "^4.2.3",
     "material-design-icons-iconfont": "^6.7.0",
     "typescript": "^5.0.2",
