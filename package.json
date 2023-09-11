@@ -10,6 +10,7 @@
     "tauri": "tauri"
   },
   "dependencies": {
+    "@supabase/supabase-js": "^2.33.1",
     "@tauri-apps/api": "^1.4.0",
     "vue": "^3.3.4",
     "vuetify": "^3.3.15"
