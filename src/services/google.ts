@@ -65,7 +65,8 @@ export const getCalendar = async (id: string) => {
     return response.result as gapi.client.calendar.CalendarListEntry;
 }
 
-export type EventList = { [start: string]: RegularEvent[] }
+export type DayEvents = { [start: string]: RegularEvent[] }
+export type WeekEvents = { [date: string]: DayEvents }
 
 export const getEvents = async (cal_id: string, start: Date, end: Date) => {
     let auth = await getAuth();
@@ -83,14 +84,25 @@ export const getEvents = async (cal_id: string, start: Date, end: Date) => {
     }
 
     let events = response.result.items as gapi.client.calendar.Event[];
-    let cal_events: EventList = {}
+    let cal_events: WeekEvents = {}
+    let currentDay = new Date(start.toISOString());
+
     for (let event of events) {
         let e = RegularEvent.fromGoogle(event);
-        if (cal_events[e.start.toISOString()]) {
-            cal_events[e.start.toISOString()].push(e);
-        } else {
-            cal_events[e.start.toISOString()] = [e];
+        // If next week, update currentMonday and currentSunday
+        if (e.start.getDate() >= currentDay.getDate() + 1) {
+            currentDay.setDate(currentDay.getDate() + 1);
         }
+        // Get week from cal_events, or create it if it doesn't exist
+        let week = cal_events[currentDay.toISOString()] || {};
+        // Add event to week
+        if (week[e.start.toISOString()]) {
+            week[e.start.toISOString()].push(e);
+        } else {
+            week[e.start.toISOString()] = [e];
+        }
+        // Update cal_events
+        cal_events[currentDay.toISOString()] = week;
     }
     return cal_events;
 }

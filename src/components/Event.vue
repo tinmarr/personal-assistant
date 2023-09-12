@@ -20,7 +20,7 @@ onMounted(() => {
         <h4>{{ event.title }}</h4>
         <div v-if="sheetHeight > 60">
             <p><i>{{ RegularEvent.timeFormat.format(event.start) }}-{{ RegularEvent.timeFormat.format(event.end) }}</i></p>
-            <p><i><v-icon icon="location_pin" />{{ event.location }}</i></p>
+            <p v-if="event.location"><i><v-icon icon="location_pin" />{{ event.location }}</i></p>
         </div>
         <i v-else-if="sheetHeight > 15">, {{ RegularEvent.timeFormat.format(event.start) }}</i>
     </v-sheet>

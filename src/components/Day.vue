@@ -1,11 +1,11 @@
 <script setup lang="ts">
 import Event from "../components/Event.vue";
 import { RegularEvent } from "../models/events";
-import { EventList } from "../services/google";
+import { DayEvents } from "../services/google";
 
 const props = defineProps<{
     day: Date;
-    events: EventList;
+    events: DayEvents | undefined;
 }>();
 
 const HOUR_SIZE = 60;
@@ -22,15 +22,14 @@ for (let i = 0; i < 24 * 4; i++) {
             newOngoing.push(ongoing[j]);
         }
     }
-    if (props.events[date.toISOString()]) {
+    if (props.events && props.events[date.toISOString()]) {
         times.push(props.events[date.toISOString()]);
-        if (newOngoing.length > 0) {
-            for (let e of newOngoing) {
-                e.overlapAfter += props.events[date.toISOString()].length;
-            }
-            for (let e of props.events[date.toISOString()]) {
-                e.overlapBefore = Math.max(newOngoing.length, e.overlapBefore);
-            }
+        for (let e of newOngoing) {
+            e.overlapAfter += props.events[date.toISOString()].length;
+        }
+        for (let j = 0; j < props.events[date.toISOString()].length; j++) {
+            let e = props.events[date.toISOString()][j];
+            e.overlapBefore = Math.max(newOngoing.length + j, e.overlapBefore);
         }
         newOngoing.push(...props.events[date.toISOString()]);
     }
