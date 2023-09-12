@@ -11,7 +11,6 @@ const props = defineProps<{
 const HOUR_SIZE = 60;
 const MILLI_SIZE = HOUR_SIZE / (60 * 60 * 1000);
 
-console.log(props.day.toISOString())
 let times: RegularEvent[][] = [];
 let date = new Date(props.day.toISOString());
 let ongoing: RegularEvent[] = [];
@@ -27,7 +26,7 @@ for (let i = 0; i < 24 * 4; i++) {
         times.push(props.events[date.toISOString()]);
         if (newOngoing.length > 0) {
             for (let e of newOngoing) {
-                e.overlapAfter = Math.max(props.events[date.toISOString()].length, e.overlapAfter);
+                e.overlapAfter += props.events[date.toISOString()].length;
             }
             for (let e of props.events[date.toISOString()]) {
                 e.overlapBefore = Math.max(newOngoing.length, e.overlapBefore);
@@ -37,19 +36,17 @@ for (let i = 0; i < 24 * 4; i++) {
     }
     ongoing = newOngoing;
 }
-console.log(props.events)
-console.log(times)
 </script>
 
 <template>
-    <div :style="{ height: (HOUR_SIZE * 24) + 'px' }">
+    <div :style="{ height: (HOUR_SIZE * 24) + 'px', position: 'relative' }">
         <div v-for="time in times">
             <div v-for="event in time" :style="{
                 height: (MILLI_SIZE * event.duration()) + 'px',
-                width: 100 / (event.overlapBefore + event.overlapAfter + 1) + '%',
+                width: event.width() + '%',
                 position: 'absolute',
                 top: (HOUR_SIZE * (event.start.getHours() + event.start.getMinutes() / 60)) + 'px',
-                left: (100 / (event.overlapBefore + 1) * event.overlapBefore) + '%'
+                left: event.left_pos() + '%',
             }">
                 <Event :event="event" />
             </div>
