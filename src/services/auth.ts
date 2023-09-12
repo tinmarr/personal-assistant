@@ -17,7 +17,7 @@ const handleError = (error: AuthError | null) => {
 export const signIn = async () => {
     ensureAuth();
     const { error } = await supabase!.auth.signInWithOAuth({
-        provider: 'google',
+        provider: "google",
         options: {
             scopes: "https://www.googleapis.com/auth/calendar"
         }
